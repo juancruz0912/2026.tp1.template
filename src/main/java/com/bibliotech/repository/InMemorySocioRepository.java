@@ -7,13 +7,20 @@ public class InMemorySocioRepository implements SocioRepository {
     private final Map<Integer, Socio> storage = new HashMap<>();
 
     @Override
-    public void guardar(Socio socio) {
+    public Socio guardar(Socio socio) {
         storage.put(socio.getId(), socio);
+        return socio;
     }
 
     @Override
     public Optional<Socio> buscarPorId(Integer id) {
         return Optional.ofNullable(storage.get(id));
+    }
+    @Override
+    public Optional<Socio> buscarPorDNI(Integer dni) {
+        return storage.values().stream()
+                .filter(s -> s.getDNI() == dni)
+                .findFirst();
     }
 
     @Override

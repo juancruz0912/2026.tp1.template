@@ -1,4 +1,7 @@
 package com.bibliotech.service;
+
+import com.bibliotech.exception.ISBNInvalidoException;
+import com.bibliotech.model.Categoria;
 import com.bibliotech.model.Recurso;
 import com.bibliotech.repository.RecursoRepository;
 import java.util.List;
@@ -8,28 +11,50 @@ public class RecursoServiceImpl implements RecursoService {
     private final RecursoRepository recursoRepository;
 
     public RecursoServiceImpl(RecursoRepository recursoRepository) {
-        this.recursoRepository = recursoRepository;  // Inyectamos el repositorio por constructor
+        this.recursoRepository = recursoRepository;
     }
 
+    @Override
     public Recurso guardar(Recurso recurso) {
-        // Aquí podrías agregar lógica: ej, validar que el título no sea nulo
-        if (recurso.titulo() == null || recurso.titulo().isEmpty()) {
-            throw new IllegalArgumentException("El nombre del recurso no puede estar vacío");
+        if (!validarISBN(recurso.isbn())) {
+            throw new ISBNInvalidoException();
         }
+
         return recursoRepository.guardar(recurso);
     }
 
-    public Optional<Recurso> buscarPorId(String isbn) {
-        return recursoRepository.buscarPorId(isbn);
+    @Override
+    public Optional<Recurso> buscarPorId(String id) {
+        return recursoRepository.buscarPorId(id);
     }
 
+    @Override
     public List<Recurso> buscarTodos() {
         return recursoRepository.buscarTodos();
     }
 
-    public void eliminar(String isbn) {
-        recursoRepository.eliminar(isbn);
+    @Override
+    public void eliminar(String id) {
+        recursoRepository.eliminar(id);
+    }
+
+    @Override
+    public boolean validarISBN(String isbn) {
+        return recursoRepository.buscarPorId(isbn).isEmpty();
+    }
+
+    @Override
+    public List<Recurso> buscarPorTitulo(String titulo) {
+        return recursoRepository.buscarPorTitulo(titulo);
+    }
+
+    @Override
+    public List<Recurso> buscarPorAutor(String autor) {
+        return recursoRepository.buscarPorAutor(autor);
+    }
+
+    @Override
+    public List<Recurso> buscarPorCategoria(Categoria categoria) {
+        return recursoRepository.buscarPorCategoria(categoria);
     }
 }
-
-

@@ -7,8 +7,9 @@ public class InMemoryPrestamoRepository implements PrestamoRepository {
     private final Map<Integer, Prestamo> storage = new HashMap<>();
 
     @Override
-    public void guardar(Prestamo prestamo) {
+    public Prestamo guardar(Prestamo prestamo) {
         storage.put(prestamo.id(), prestamo);
+        return prestamo;
     }
 
     @Override
@@ -24,5 +25,13 @@ public class InMemoryPrestamoRepository implements PrestamoRepository {
     @Override
     public void eliminar(Integer id) {
         storage.remove(id);
+    }
+
+    @Override
+    public List<Prestamo> buscarPorSocio(Integer socioId) {
+        return storage.values().stream()
+                .filter(p -> p.socio().getId() == socioId)
+                .filter(p -> p.fechaDevolucionEfectiva() == null)
+                .toList();
     }
 }

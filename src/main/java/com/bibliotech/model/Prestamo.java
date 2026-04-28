@@ -7,5 +7,6 @@ public record Prestamo(
         Socio socio,
         Recurso libro,
         LocalDate fechaPrestamo,
-        LocalDate fechaDevolucionPactada
+        LocalDate fechaDevolucionPactada,
+        LocalDate fechaDevolucionEfectiva
 ){}

@@ -7,9 +7,9 @@
 
 | Campo | Respuesta |
 | :--- | :--- |
-| **Nombre** | |
-| **Apellido** | |
-| **Legajo** | |
+| **Nombre** | Juan Cruz |
+| **Apellido** | Rupcic |
+| **Legajo** | 63410 |
 
 > **Fecha de entrega:** 28 de Abril de 2026
 
